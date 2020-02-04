@@ -4,7 +4,8 @@ import {
   View,
   TextInput,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 import { connect } from "react-redux";
 import { addProduct, editProduct } from "../../actions/products.actions";
@@ -15,20 +16,19 @@ class ProductForm extends Component {
     headerTintColor: "white",
     headerStyle: {
       backgroundColor: "#845cc3"
-    }
+    },
   };
 
   state = {
-    product: this.props.navigation.getParam('product', null),
-    key: this.props.navigation.getParam('key', null)
+    product: null
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Product {this.props.navigation.getParam('key', null)}</Text>
+        <Text style={styles.title}>Product</Text>
         <TextInput
-          value={this.props.navigation.getParam('product', '')}
+          value={this.state.product}
           placeholder="Name"
           style={styles.productInput}
           onChangeText={product => this.setState({ product })}
@@ -47,6 +47,12 @@ class ProductForm extends Component {
           onPress={() => this.props.navigation.navigate("ProductList")}
         >
           <Text style={{ fontSize: 22 }}>Go to Product List</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ marginBottom: 16 }}
+          onPress={() => this.props.navigation.navigate("LocationShow")}
+        >
+          <Text style={{ fontSize: 22 }}>Show location</Text>
         </TouchableOpacity>
       </View>
     );
@@ -75,7 +81,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     products: state.productReducer.productList
   };

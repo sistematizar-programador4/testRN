@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,7 +23,6 @@ import expo.modules.filesystem.FileSystemPackage;
 import android.location.LocationManager;
 import android.location.LocationListener;
 import android.location.Location;
-import com.test.service.LocationService;
 import android.content.Context;
 import android.os.Bundle;
 import android.content.Intent;
@@ -36,24 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
     new BasePackageList().getPackageList(),
     Arrays.<SingletonModule>asList()
   );
-  private final LocationListener listener = new LocationListener() {
-  @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-    
-  @Override
-    public void onProviderEnabled(String provider) {
-    }
-  @Override
-    public void onProviderDisabled(String provider) {
-    }
-  @Override
-      public void onLocationChanged(Location location) {
-      Intent myIntent = new Intent(getApplicationContext(), LocationService.class);
-      getApplicationContext().startService(myIntent);
-    HeadlessJsTaskService.acquireWakeLockNow(getApplicationContext());
-      }
-  };
+
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -81,9 +64,6 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);     
-    // Start requesting for location
-    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1, listener);
     SoLoader.init(this, /* native exopackage */ false);
  }
 }

@@ -4,7 +4,7 @@ import App from "./App";
 import { name as appName } from "./app.json";
 import { Provider } from "react-redux";
 
-import configureStore from "./src/stores/products.store";
+import configureStore from "./src/stores/store";
 
 const store = configureStore();
 
@@ -13,11 +13,5 @@ const Redux = () => (
     <App />
   </Provider>
 );
-const LogLocation = async (data) => {
-  navigator.geolocation.getCurrentPosition((position) => {
-    console.log(position.coords);
-  });
-}
 
-AppRegistry.registerHeadlessTask('LogLocation', () => LogLocation);
 AppRegistry.registerComponent(appName, () => Redux);
